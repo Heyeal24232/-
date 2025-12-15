@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XMoon - 内嵌网站</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header h1 {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .controls {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .website-frame {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            flex: 1;
+            min-height: 600px;
+        }
+        
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 400px;
+            color: #666;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+        
+        .footer {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.25rem;
+            }
+            
+            .container {
+                padding: 0.5rem;
+            }
+            
+            .btn {
+                display: block;
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>🌙 XMoon - 内嵌网站访问</h1>
+    </header>
+    
+    <div class="container">
+        <div class="controls">
+            <button class="btn" onclick="loadWebsite()">🚀 加载网站</button>
+            <button class="btn" onclick="refreshWebsite()">🔄 刷新页面</button>
+        </div>
+        
+        <div class="website-frame">
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>点击"加载网站"开始访问</p>
+            </div>
+            
+            <iframe id="website-frame" src="" style="display: none;"></iframe>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>内嵌访问 https://x.xmoon.top/ | 点击按钮即可访问</p>
+    </footer>
+    
+    <script>
+        function loadWebsite() {
+            const iframe = document.getElementById('website-frame');
+            const loading = document.getElementById('loading');
+            
+            loading.style.display = 'flex';
+            iframe.style.display = 'none';
+            iframe.src = 'https://x.xmoon.top/';
+            
+            iframe.onload = function() {
+                loading.style.display = 'none';
+                iframe.style.display = 'block';
+            };
+        }
+        
+        function refreshWebsite() {
+            const iframe = document.getElementById('website-frame');
+            const loading = document.getElementById('loading');
+            
+            if (iframe.src) {
+                loading.style.display = 'flex';
+                iframe.style.display = 'none';
+                iframe.src = iframe.src;
+            } else {
+                loadWebsite();
+            }
+        }
+        
+        // 页面加载时自动加载网站（可选）
+        // window.addEventListener('load', loadWebsite);
+    </script>
+</body>
+</html>
